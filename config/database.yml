@@ -21,7 +21,7 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: saasteload_production
+  database: d61jcot8du5tq
   pool: 5
-  username: tookoda
-  password: tookoda
+  username: idmsueovzlgxrb
+  password: ehGbe8x66_--_Rpw0Am_i3MahN
