@@ -1,0 +1,43 @@
+- if (@projectChemical != nil && @projectChemical.errors.any?)
+  - @projectChemical.errors.full_messages.each do |error_message| 
+    = error_message + '.'
+
+%h2 Saasteluba
+
+= form_tag create_project_chemical_projects_path do
+  %table#projectChemicals
+    %thead
+      %tr
+        %th Kemikaal
+        %th Kogus tonni
+        %th Saasteallika tähis
+        %th Tööaeg
+        %th SNAP
+        %th SNAP nimetus
+        %th
+    %tbody
+      - @projectChemicals.each do |projectChemical|
+        %tr
+          %td #{projectChemical.chemical.name}
+          %td #{projectChemical.amount}
+          %td #{projectChemical.contamination_source.code}
+          %td #{projectChemical.working_time}
+          %td #{projectChemical.snap.snap}
+          %td #{projectChemical.snap.name}
+          %td
+      %tr
+        %td= autocomplete_field :projectChemical, 'chemical_name', autocomplete_chemical_name_projects_path, :update_elements => {:id => '#chemical_id'}
+        %td= text_field :projectChemical, 'amount'
+        %td= collection_select(:projectChemical, 'contamination_source_id', ContaminationSource.find_all_by_project_id(@project_id), :id, :code, :prompt => '- vali -')
+        %td= text_field :projectChemical, 'working_time'
+        %td= text_field :projectChemical, 'snap_snap', :readonly => true
+        %td= autocomplete_field :projectChemical, 'snap_name', autocomplete_snap_name_projects_path, :update_elements => {:id => '#snap_id', :snap => '#projectChemical_snap_snap'}
+        %td= submit_tag 'Lisa'
+        = hidden_field_tag "chemical_id", @chemical_id
+        = hidden_field_tag "snap_id", @snap_id
+        = hidden_field_tag "project_id", @project_id
+          
+%br
+  
+= button_to 'Arvuta', calculate_project_path(@project_id), :method => :get
+= button_to 'Tagasi', projects_path, :method => :get

@@ -1,0 +1,42 @@
+- if (@chemical != nil && @chemical.errors.any?)
+  - @chemical.errors.full_messages.each do |error_message| 
+    = error_message + '.'
+
+%h2 Kemikaalid
+
+= form_tag chemicals_path do
+  %table#chemicals
+    %thead
+      %tr
+        %th Nimetus
+        %th Tüüp
+        %th Loü %
+        %th Ohuklass
+        %th R või H
+        %th S või P
+        %th
+    %tbody
+      - @chemicals.each do |chemical|
+        %tr
+          %td #{chemical.name}
+          %td #{chemical.chemical_type == 'WB' ? 'WB - veepõhine' : (chemical.chemical_type == 'SB' ? 'SB - lahustipõhine' : chemical.chemical_type)}
+          %td #{chemical.loy}
+          %td #{chemical.hazard_class}
+          %td #{chemical.rh}
+          %td #{chemical.sp}
+          %td= link_to "Koostisosad", chemical_elements_path(:chemical_id => chemical.id)
+      %tr
+        %td= text_field :chemical, 'name'
+        %td= select :chemical, :chemical_type,
+              [['WB - veepõhine','WB'],
+              ['SB - lahustipõhine','SB']], 
+              {:prompt => '- vali -'}
+        %td= text_field :chemical, 'loy'
+        %td= text_field :chemical, 'hazard_class'
+        %td= text_field :chemical, 'rh'
+        %td= text_field :chemical, 'sp'
+        %td= submit_tag 'Lisa'
+          
+%br
+  
+= button_to 'Tagasi', projects_path, :method => :get

@@ -1,0 +1,30 @@
+- if (@group != nil && @group.errors.any?)
+  - @group.errors.full_messages.each do |error_message| 
+    = error_message + '.'
+
+%h2 Grupid
+
+= form_tag groups_path do
+  %table#groups
+    %thead
+      %tr
+        %th Cas
+        %th Nimetus
+        %th Süsiniku sisaldus
+        %th
+    %tbody
+      - @groups.each do |group|
+        %tr
+          %td #{group.cas}
+          %td #{group.name}
+          %td #{group.carbon_content}
+          %td= link_to "Koostisosad", group_elements_path(:group_id => group.id)
+      %tr
+        %td= text_field :group, 'cas'
+        %td= text_field :group, 'name'
+        %td= text_field :group, 'carbon_content'
+        %td= submit_tag 'Lisa'
+          
+%br
+  
+= button_to 'Tagasi', projects_path, :method => :get

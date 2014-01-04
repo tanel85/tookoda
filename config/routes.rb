@@ -1,4 +1,6 @@
 Tookoda::Application.routes.draw do
+  get "projects/index"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -11,6 +13,30 @@ Tookoda::Application.routes.draw do
   # This route can be invoked with purchase_url(:id => product.id)
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
+  resources :contamination_sources
+  resources :groups
+  resources :group_elements
+  resources :snaps
+  resources :chemicals
+  
+  resources :chemical_elements do
+    get :chemical_elements, to: :index
+    get :autocomplete_v_group_element_cas, :on => :collection
+  end
+  
+  resources :pollution_permit_chemicals do
+    get :calculate, :on => :member
+    get :autocomplete_chemical_name, :on => :collection
+    get :autocomplete_snap_name, :on => :collection
+  end
+  
+  resources :projects do
+    get :calculate, :on => :member
+    get :project_chemicals, :on => :member
+    post :create_project_chemical, :on => :collection
+    get :autocomplete_chemical_name, :on => :collection
+    get :autocomplete_snap_name, :on => :collection
+  end
   #   resources :products
 
   # Sample resource route with options:
@@ -48,7 +74,7 @@ Tookoda::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
+  #root :to => 'projects#index'
 
   # See how all your routes lay out with "rake routes"
 

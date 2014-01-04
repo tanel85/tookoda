@@ -1,0 +1,27 @@
+- if (@snap != nil && @snap.errors.any?)
+  - @snap.errors.full_messages.each do |error_message| 
+    = error_message + '.'
+
+%h2 SNAPid
+
+= form_tag snaps_path do
+  %table#snaps
+    %thead
+      %tr
+        %th SNAP
+        %th Nimetus
+        %th
+    %tbody
+      - @snaps.each do |snap|
+        %tr
+          %td #{snap.snap}
+          %td #{snap.name}
+          %td
+      %tr
+        %td= text_field :snap, 'snap'
+        %td= text_field :snap, 'name'
+        %td= submit_tag 'Lisa'
+          
+%br
+  
+= button_to 'Tagasi', projects_path, :method => :get
