@@ -1,0 +1,29 @@
+-#  This file is app/views/contamination_sources/index.html.haml
+- if (@groupElement != nil && @groupElement.errors.any?)
+  - @groupElement.errors.full_messages.each do |error_message| 
+    = error_message + '.'
+
+%h2 Grupi koostisosad
+
+= form_tag group_elements_path do
+  %table#groupElements
+    %thead
+      %tr
+        %th CAS
+        %th Nimetus
+        %th
+    %tbody
+      - @groupElements.each do |groupElement|
+        %tr
+          %td #{groupElement.cas}
+          %td #{groupElement.name}
+          %td
+      %tr
+        %td= text_field :groupElement, 'cas'
+        %td= text_field :groupElement, 'name'
+        %td= submit_tag 'Lisa'
+        = hidden_field_tag "group_id", @group_id
+          
+%br
+  
+= button_to 'Tagasi', groups_path, :method => :get

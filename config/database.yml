@@ -5,9 +5,9 @@
 #   gem 'sqlite3'
 development:
   adapter: oracle_enhanced
-  host: //localhost:1521/XE
-  username: alfresco
-  password: alfresco
+  database: //localhost:1521/XE
+  username: tookoda
+  password: tookoda
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
