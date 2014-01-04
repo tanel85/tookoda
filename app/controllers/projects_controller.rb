@@ -49,7 +49,7 @@ class ProjectsController < ApplicationController
     projectChemical.snap_name = projectChemicalParams['snap_name']
     projectChemical.contamination_source_id = projectChemicalParams['contamination_source_id']
     projectChemical.chemical_name = projectChemicalParams['chemical_name']
-  end
+  end 
   
   def calculate
     @project_id = params[:id]
