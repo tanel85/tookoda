@@ -2,12 +2,12 @@ class VPollutionPermitResults < ActiveRecord::Migration
   def up
     execute <<-SQL
       CREATE VIEW v_pollution_permit_results AS 
-      SELECT project_id
-            ,chemical_name
-            ,chemical_element_name
-            ,ta
-            ,ta / 1000000 / (working_time * 3600) gs
-            ,ta / 1000000 / (working_time * 3600) / volume_rate * (carbon_content / 100) * 1000 mgcm3
+      SELECT innr.project_id
+            ,innr.chemical_name
+            ,innr.chemical_element_name
+            ,innr.ta
+            ,innr.ta / 1000000 / (innr.working_time * 3600) gs
+            ,innr.ta / 1000000 / (innr.working_time * 3600) / innr.volume_rate * (innr.carbon_content / 100) * 1000 mgcm3
         FROM (SELECT prch.project_id
                     ,chem.name chemical_name
                     ,grel.name chemical_element_name
@@ -24,7 +24,7 @@ class VPollutionPermitResults < ActiveRecord::Migration
                 FROM project_chemicals prch
                 JOIN chemicals chem ON chem.id = prch.chemical_id
                 JOIN chemical_elements chel ON chem.id = chel.chemical_id
-                JOIN group_elements grel ON grel.id = chel.group_element_id)
+                JOIN group_elements grel ON grel.id = chel.group_element_id) AS innr
     SQL
   end
 
