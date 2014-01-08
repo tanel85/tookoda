@@ -32,6 +32,7 @@ Tookoda::Application.routes.draw do
   
   resources :projects do
     get :calculate, :on => :member
+    get :print, :on => :member
     get :project_chemicals, :on => :member
     post :create_project_chemical, :on => :collection
     get :autocomplete_chemical_name, :on => :collection

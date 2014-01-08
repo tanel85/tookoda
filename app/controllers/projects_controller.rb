@@ -55,5 +55,12 @@ class ProjectsController < ApplicationController
     @project_id = params[:id]
     @pollPermRows = VPollutionPermitResult.find_all_by_project_id @project_id
   end
+  
+  def print
+    @project_id = params[:id]
+    @pollPermRows = VPollutionPermitResult.find_all_by_project_id @project_id
+    file = ReportHelper.test_report
+    send_data file, :filename=>"report.xlsx"
+  end
 
 end
