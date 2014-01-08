@@ -17,7 +17,7 @@ class VPollutionPermitResults < ActiveRecord::Migration
                     ,prch.working_time
                     ,(SELECT coso.volume_rate
                         FROM contamination_sources coso
-                       WHERE coso.project_id = prch.project_id) AS volume_rate
+                       WHERE coso.id = prch.contamination_source_id) AS volume_rate
                     ,(SELECT grou.carbon_content
                         FROM groups grou
                        WHERE grou.id = grel.group_id) AS carbon_content
