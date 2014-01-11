@@ -7,8 +7,8 @@ class VPollutionPermitResults < ActiveRecord::Migration
             ,innr.chemical_element_name
             ,innr.chemical_element_cas
             ,innr.ta
-            ,innr.ta / 1000000 / (innr.working_time * 3600) gs
-            ,innr.ta / 1000000 / (innr.working_time * 3600) / innr.volume_rate * (innr.carbon_content / 100) * 1000 mgcm3
+            ,innr.ta * 1000000 / (innr.working_time * 3600) gs
+            ,innr.ta * 1000000 / (innr.working_time * 3600) / innr.volume_rate * (innr.carbon_content / 100) * 1000 mgcm3
         FROM (SELECT prch.project_id
                     ,chem.name chemical_name
                     ,grel.name chemical_element_name
