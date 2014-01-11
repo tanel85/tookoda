@@ -33,12 +33,12 @@
       %tr
         %td= text_field :contSource, 'name'
         %td= text_field :contSource, 'code'
-        %td= text_field :contSource, 'diameter'
-        %td= text_field :contSource, 'height'
-        %td= text_field :contSource, 'temperature'
-        %td= text_field :contSource, 'x_coordinate'
-        %td= text_field :contSource, 'y_coordinate'
-        %td= text_field :contSource, 'volume_rate'
+        %td= text_field :contSource, 'diameter', :class => "w100"
+        %td= text_field :contSource, 'height', :class => "w100"
+        %td= text_field :contSource, 'temperature', :class => "w100"
+        %td= text_field :contSource, 'x_coordinate', :class => "w100"
+        %td= text_field :contSource, 'y_coordinate', :class => "w100"
+        %td= text_field :contSource, 'volume_rate', :class => "w100"
         %td= submit_tag 'Lisa'
         = hidden_field_tag "project_id", @project_id
           

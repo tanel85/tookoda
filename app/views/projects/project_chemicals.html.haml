@@ -27,9 +27,9 @@
           %td
       %tr
         %td= autocomplete_field :projectChemical, 'chemical_name', autocomplete_chemical_name_projects_path, :update_elements => {:id => '#chemical_id'}
-        %td= text_field :projectChemical, 'amount'
+        %td= text_field :projectChemical, 'amount', :class => "w100"
         %td= collection_select(:projectChemical, 'contamination_source_id', ContaminationSource.find_all_by_project_id(@project_id), :id, :code, :prompt => '- vali -')
-        %td= text_field :projectChemical, 'working_time'
+        %td= text_field :projectChemical, 'working_time', :class => "w100"
         %td= text_field :projectChemical, 'snap_snap', :readonly => true
         %td= autocomplete_field :projectChemical, 'snap_name', autocomplete_snap_name_projects_path, :update_elements => {:id => '#snap_id', :snap => '#projectChemical_snap_snap'}
         %td= submit_tag 'Lisa'
