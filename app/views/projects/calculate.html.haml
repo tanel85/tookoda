@@ -13,11 +13,19 @@
       %tr
         %td #{pollPermRow.chemical_name}
         %td #{pollPermRow.chemical_element_name}
-        %td #{pollPermRow.gs}
-        %td #{pollPermRow.ta}
-        %td #{pollPermRow.mgcm3}
-          
+        %td #{pollPermRow.gs.round(4)}
+        %td #{pollPermRow.ta.round(4)}
+        %td #{pollPermRow.mgcm3.round(4)}
+    %tr
+      %td{:colspan => 2, :align => 'right'} 
+        %strong Kokku:
+      %td 
+        %strong #{@gs_sum.round(4)}
+      %td 
+        %strong #{@ta_sum.round(4)}
+      %td 
+        %strong #{@mgcm3_sum.round(4)}       
 %br
   
-= button_to 'Excel', print_project_path(@project_id), :method => :get
+= button_to 'Trüki heitkogused', print_project_path(@project_id), :method => :get
 = button_to 'Tagasi', project_chemicals_project_path(@project_id), :method => :get

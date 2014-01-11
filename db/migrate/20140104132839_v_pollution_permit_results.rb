@@ -5,12 +5,14 @@ class VPollutionPermitResults < ActiveRecord::Migration
       SELECT innr.project_id
             ,innr.chemical_name
             ,innr.chemical_element_name
+            ,innr.chemical_element_cas
             ,innr.ta
             ,innr.ta / 1000000 / (innr.working_time * 3600) gs
             ,innr.ta / 1000000 / (innr.working_time * 3600) / innr.volume_rate * (innr.carbon_content / 100) * 1000 mgcm3
         FROM (SELECT prch.project_id
                     ,chem.name chemical_name
                     ,grel.name chemical_element_name
+                    ,grel.cas chemical_element_cas
                     ,chel.max_percent / (SELECT SUM(chel2.max_percent)
                                            FROM chemical_elements chel2
                                           WHERE chel2.chemical_id = prch.chemical_id) * prch.amount * chem.loy / 100 ta

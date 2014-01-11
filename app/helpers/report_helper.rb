@@ -16,4 +16,11 @@ module ReportHelper
     outstrio.string
   end
   
+  def self.xlsx_to_string axlsx_package
+    outstrio = StringIO.new
+    axlsx_package.use_shared_strings = true # Otherwise strings don't display in iWork Numbers
+    outstrio.write(axlsx_package.to_stream.read)
+    outstrio.string
+  end
+  
 end

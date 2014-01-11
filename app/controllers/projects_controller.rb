@@ -54,12 +54,19 @@ class ProjectsController < ApplicationController
   def calculate
     @project_id = params[:id]
     @pollPermRows = VPollutionPermitResult.find_all_by_project_id @project_id
+    @gs_sum = 0
+    @ta_sum = 0
+    @mgcm3_sum = 0
+    @pollPermRows.each do |pollPermRow|
+      @gs_sum += pollPermRow.gs
+      @ta_sum += pollPermRow.ta
+      @mgcm3_sum += pollPermRow.mgcm3
+    end
   end
   
   def print
-    @project_id = params[:id]
-    @pollPermRows = VPollutionPermitResult.find_all_by_project_id @project_id
-    file = ReportHelper.test_report
+    calculate
+    file = VPollutionAmount.generate_report @project_id
     send_data file, :filename=>"report.xlsx"
   end
 
