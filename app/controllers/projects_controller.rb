@@ -53,7 +53,7 @@ class ProjectsController < ApplicationController
   
   def calculate
     @project_id = params[:id]
-    @pollPermRows = VPollutionPermitResult.find_all_by_project_id @project_id
+    @pollPermRows = VPollutionPermitResult.find_by_project @project_id
     @gs_sum = 0
     @ta_sum = 0
     @mgcm3_sum = 0
