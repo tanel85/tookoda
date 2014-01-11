@@ -23,8 +23,7 @@ class VPollutionAmount < ActiveRecord::Base
       "", "Ava läbimõõt, m", "Väljumiskõrgus maapinnast, m", "Joonkiirus, m/s", "Temperatuur, °C", "CAS nr", "Nimetus", "Heitkogus", ""]
     sheet.merge_cells "E2:F2"
     sheet.merge_cells "M2:N2"
-    sheet.add_row ["", "", "", "", "X", "Y", "", "", "", "", "", "", "hetkeline, g/s (täpsus 0,001)", 
-      "tonnides aastas (täpsus 0,001); RM ja POS-d – kg-des (täpsus 0,001); PCDD/PCDF – mg-des (täpsus 0,000001)"]
+    sheet.add_row ["", "", "", "", "X", "Y", "", "", "", "", "", "", "hetkeline, g/s", "tonnides aastas"]
     sheet.merge_cells "A2:A3"
     sheet.merge_cells "B2:B3"
     sheet.merge_cells "C2:C3"

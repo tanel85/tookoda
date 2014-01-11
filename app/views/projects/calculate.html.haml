@@ -3,19 +3,19 @@
 %table#pollutionPermit
   %thead
     %tr
-      %th Kemikaal
-      %th Aine nimetus
+      %th Saasteallika tähis
+      %th Grupi nimetus
       %th g/s
       %th t/a
       %th mgC/m3
   %tbody
     - @pollPermRows.each do |pollPermRow|
       %tr
-        %td #{pollPermRow.chemical_name}
-        %td #{pollPermRow.chemical_element_name}
+        %td #{pollPermRow.contamination_source_code}
+        %td #{pollPermRow.group_name}
         %td #{pollPermRow.gs.round(4)}
         %td #{pollPermRow.ta.round(4)}
-        %td #{pollPermRow.mgcm3.round(4)}
+        %td #{pollPermRow.mgcm3.round(2)}
     %tr
       %td{:colspan => 2} 
         %strong Kokku:
@@ -24,7 +24,7 @@
       %td 
         %strong #{@ta_sum.round(4)}
       %td 
-        %strong #{@mgcm3_sum.round(4)}       
+        %strong #{@mgcm3_sum.round(2)}       
 %br
   
 = button_to 'Trüki heitkogused', print_project_path(@project_id), :method => :get
