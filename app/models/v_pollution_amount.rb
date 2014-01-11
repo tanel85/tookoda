@@ -2,7 +2,11 @@
 class VPollutionAmount < ActiveRecord::Base
 
   attr_accessible :project_id, :snap, :snap_name, :cont_source_name, :cont_source_code, :x_coordinate, :y_coordinate,
-    :diameter, :height, :line_speed, :temperature, :chemical_element_cas, :chemical_element_name, :gs, :ta
+    :diameter, :height, :line_speed, :temperature, :group_cas, :group_name, :gs, :ta
+    
+  def self.find_by_project project_id
+    VPollutionAmount.where(:project_id => project_id).order('cont_source_code, group_name')
+  end
     
   def self.generate_report project_id
     p = Axlsx::Package.new
@@ -37,11 +41,11 @@ class VPollutionAmount < ActiveRecord::Base
   end
   
   def self.add_rows sheet, project_id
-    rows = VPollutionAmount.find_all_by_project_id project_id
+    rows = VPollutionAmount.find_by_project project_id
     rows.each do |row|
       sheet.add_row [row.snap, row.snap_name, row.cont_source_name, row.cont_source_code, 
         row.x_coordinate, row.y_coordinate, row.diameter, row.height, row.line_speed.round(2), 
-        row.temperature, row.chemical_element_cas, row.chemical_element_name, row.gs.round(4), row.ta.round(4)]
+        row.temperature, row.group_cas, row.group_name, row.gs.round(4), row.ta.round(4)]
     end
   end
 
