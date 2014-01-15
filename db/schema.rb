@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140111153418) do
+ActiveRecord::Schema.define(:version => 20140115200322) do
 
   create_table "chemical_elements", :force => true do |t|
     t.integer  "chemical_id",      :precision => 38, :scale => 0

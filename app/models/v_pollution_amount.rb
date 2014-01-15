@@ -7,14 +7,12 @@ class VPollutionAmount < ActiveRecord::Base
   def self.find_by_project project_id
     VPollutionAmount.where(:project_id => project_id).order('cont_source_code, group_name')
   end
-    
-  def self.generate_report project_id
-    p = Axlsx::Package.new
-    p.workbook.add_worksheet(:name => "Saasteainete heitkogused") do |sheet|
+  
+  def self.add_sheet axlx_package, project_id
+    axlx_package.workbook.add_worksheet(:name => "Saasteainete heitkogused") do |sheet|
       add_header sheet
       add_rows sheet, project_id
     end
-    ReportHelper.xlsx_to_string p
   end
   
   def self.add_header sheet

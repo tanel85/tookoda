@@ -66,7 +66,10 @@ class ProjectsController < ApplicationController
   
   def print
     calculate
-    file = VPollutionAmount.generate_report @project_id
+    p = Axlsx::Package.new
+    VPollutionAmount.add_sheet p, @project_id
+    VChemicalUsage.add_sheet p, @project_id
+    file = ReportHelper.xlsx_to_string p
     send_data file, :filename=>"report.xlsx"
   end
 
