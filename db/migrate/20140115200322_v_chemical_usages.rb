@@ -2,7 +2,7 @@ class VChemicalUsages < ActiveRecord::Migration
   def up
     execute <<-SQL
       CREATE VIEW v_chemical_usages AS
-      SELECT prch.id
+      SELECT prch.id AS prch_id
             ,prch.project_id
             ,chem.name AS chemical_name
             ,chem.chemical_type

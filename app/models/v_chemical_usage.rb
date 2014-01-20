@@ -1,17 +1,17 @@
 # encoding: UTF-8
 class VChemicalUsage < ActiveRecord::Base
 
-  # attr_accessible :project_id, :snap, :snap_name, :cont_source_name, :cont_source_code, :x_coordinate, :y_coordinate,
-    # :diameter, :height, :line_speed, :temperature, :group_cas, :group_name, :gs, :ta
+   attr_accessible :prch_id, :project_id, :chemical_name, :chemical_type, :loy, :amount, :hazard_class, :rh, :sp,
+    :snap, :snap_name, :group_cas, :group_name, :ta, :gs, :cont_source_name 
     
   def self.find_by_project project_id
-    VChemicalUsage.where(:project_id => project_id).order('cont_source_code, group_name')
+    VChemicalUsage.where(:project_id => project_id).order('prch_id, group_name')
   end
   
   def self.add_sheet axlx_package, project_id
     axlx_package.workbook.add_worksheet(:name => "Kemikaalide kasutamine") do |sheet|
       add_header sheet
-      #add_rows sheet, project_id
+      add_rows sheet, project_id
     end
   end
   
@@ -41,10 +41,29 @@ class VChemicalUsage < ActiveRecord::Base
   
   def self.add_rows sheet, project_id
     rows = VChemicalUsage.find_by_project project_id
+    prch_id = nil
+    row_number = 3
     rows.each do |row|
-      sheet.add_row [row.snap, row.snap_name, row.cont_source_name, row.cont_source_code, 
-        row.x_coordinate, row.y_coordinate, row.diameter, row.height, row.line_speed.round(2), 
-        row.temperature, row.group_cas, row.group_name, row.gs.round(4), row.ta.round(4)]
+      if prch_id == row.prch_id
+        sheet.add_row ["", "", "", "", "", "", "", "", "", "", row.group_cas, row.group_name, row.gs.round(4), row.ta.round(4), ""]
+        sheet.merge_cells "A" + row_number.to_s + ":A" + (row_number + 1).to_s
+        sheet.merge_cells "B" + row_number.to_s + ":B" + (row_number + 1).to_s
+        sheet.merge_cells "C" + row_number.to_s + ":C" + (row_number + 1).to_s
+        sheet.merge_cells "D" + row_number.to_s + ":D" + (row_number + 1).to_s
+        sheet.merge_cells "E" + row_number.to_s + ":E" + (row_number + 1).to_s
+        sheet.merge_cells "F" + row_number.to_s + ":F" + (row_number + 1).to_s
+        sheet.merge_cells "G" + row_number.to_s + ":G" + (row_number + 1).to_s
+        sheet.merge_cells "H" + row_number.to_s + ":H" + (row_number + 1).to_s
+        sheet.merge_cells "I" + row_number.to_s + ":I" + (row_number + 1).to_s
+        sheet.merge_cells "J" + row_number.to_s + ":J" + (row_number + 1).to_s
+        sheet.merge_cells "O" + row_number.to_s + ":O" + (row_number + 1).to_s
+      else
+        prch_id = row.prch_id
+        row_number += 1
+        sheet.add_row [row_number - 3, row.chemical_name, (row.chemical_type == 'WB' ? 'WB - veepõhine' : 'SB - lahustipõhine'), 
+          row.loy, row.amount, row.hazard_class, row.rh, row.sp, row.snap, row.snap_name, 
+          row.group_cas, row.group_name, row.gs.round(4), row.ta.round(4), row.cont_source_name]
+      end
     end
   end
 
