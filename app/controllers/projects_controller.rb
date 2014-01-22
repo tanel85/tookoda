@@ -53,14 +53,29 @@ class ProjectsController < ApplicationController
   
   def calculate
     @project_id = params[:id]
-    @pollPermRows = VPollutionPermitResult.find_by_project @project_id
-    @gs_sum = 0
-    @ta_sum = 0
-    @mgcm3_sum = 0
-    @pollPermRows.each do |pollPermRow|
-      @gs_sum += pollPermRow.gs
-      @ta_sum += pollPermRow.ta
-      @mgcm3_sum += pollPermRow.mgcm3
+    pollPermRows = VPollutionPermitResult.find_by_project @project_id
+    @pollPermRowsMap = Hash.new
+    @totalRows = Hash.new
+    @totalRow = PollutionPermitTotalRow.create
+    pollPermRows.each do |pollPermRow|
+      if @pollPermRowsMap.has_key? pollPermRow.contamination_source_code
+        @pollPermRowsMap[pollPermRow.contamination_source_code] << pollPermRow
+      else
+        @pollPermRowsMap[pollPermRow.contamination_source_code] = [pollPermRow]
+      end
+      @totalRow.gs += pollPermRow.gs
+      @totalRow.ta += pollPermRow.ta
+      @totalRow.mgcm3 += pollPermRow.mgcm3
+      row = nil
+      if @totalRows.has_key? pollPermRow.contamination_source_code
+        row = @totalRows[pollPermRow.contamination_source_code]
+      else
+        row = PollutionPermitTotalRow.create
+        @totalRows[pollPermRow.contamination_source_code] = row
+      end
+      row.gs += pollPermRow.gs
+      row.ta += pollPermRow.ta
+      row.mgcm3 += pollPermRow.mgcm3
     end
   end
   

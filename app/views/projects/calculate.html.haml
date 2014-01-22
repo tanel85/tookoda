@@ -9,22 +9,33 @@
       %th t/a
       %th mgC/m3
   %tbody
-    - @pollPermRows.each do |pollPermRow|
+    - @pollPermRowsMap.each do |contSourceCode, pollPermRows|
+      - pollPermRows.each do |pollPermRow|
+        %tr
+          %td #{pollPermRow.contamination_source_code}
+          %td #{pollPermRow.group_name}
+          %td #{pollPermRow.gs.round(4)}
+          %td #{pollPermRow.ta.round(4)}
+          %td #{pollPermRow.mgcm3.round(2)}
+      - totalRow = @totalRows[contSourceCode]
       %tr
-        %td #{pollPermRow.contamination_source_code}
-        %td #{pollPermRow.group_name}
-        %td #{pollPermRow.gs.round(4)}
-        %td #{pollPermRow.ta.round(4)}
-        %td #{pollPermRow.mgcm3.round(2)}
+        %td{:colspan => 2} 
+          %strong #{contSourceCode} kokku:
+        %td 
+          %strong #{totalRow.gs.round(4)}
+        %td 
+          %strong #{totalRow.ta.round(4)}
+        %td 
+          %strong #{totalRow.mgcm3.round(2)}
     %tr
       %td{:colspan => 2} 
-        %strong Kokku:
+        %strong Kõik read kokku:
       %td 
-        %strong #{@gs_sum.round(4)}
+        %strong #{@totalRow.gs.round(4)}
       %td 
-        %strong #{@ta_sum.round(4)}
+        %strong #{@totalRow.ta.round(4)}
       %td 
-        %strong #{@mgcm3_sum.round(2)}       
+        %strong #{@totalRow.mgcm3.round(2)}       
 %br
   
 = button_to 'Trüki heitkogused', print_project_path(@project_id), :method => :get
