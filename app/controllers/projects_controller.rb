@@ -10,7 +10,6 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.create(params[:project])
     if !@project.errors.any?
-      flash[:notice] = "Asutus #{@project.name} on lisatud."
       redirect_to projects_path
     else
       @projects = Project.all
@@ -49,7 +48,25 @@ class ProjectsController < ApplicationController
     projectChemical.snap_name = projectChemicalParams['snap_name']
     projectChemical.contamination_source_id = projectChemicalParams['contamination_source_id']
     projectChemical.chemical_name = projectChemicalParams['chemical_name']
-  end 
+  end
+  
+  def contamination_sources
+    @project_id = params[:id]
+    @contSources = ContaminationSource.find_all_by_project_id @project_id
+  end
+  
+  def create_contamination_source
+    contSourceParams = params[:contSource]
+    @project_id = params[:project_id]
+    contSourceParams['project_id'] = @project_id    
+    @contSource = ContaminationSource.create(contSourceParams)
+    if !@contSource.errors.any?
+      redirect_to contamination_sources_project_path(@project_id)
+    else
+      @contSources = ContaminationSource.find_all_by_project_id @project_id
+      render :contamination_sources
+    end
+  end
   
   def calculate
     @project_id = params[:id]

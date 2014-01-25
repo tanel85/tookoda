@@ -16,14 +16,16 @@ Tookoda::Application.routes.draw do
   # This route can be invoked with purchase_url(:id => product.id)
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
-  resources :contamination_sources
-  resources :groups
-  resources :group_elements
   resources :snaps
-  resources :chemicals
   
-  resources :chemical_elements do
-    get :chemical_elements, to: :index
+  resources :groups do
+    get :group_elements, :on => :member
+    post :create_group_element, :on => :collection
+  end
+  
+  resources :chemicals do
+    get :chemical_elements, :on => :member
+    post :create_chemical_element, :on => :collection
     get :autocomplete_v_group_element_cas, :on => :collection
   end
   
@@ -38,6 +40,8 @@ Tookoda::Application.routes.draw do
     get :print, :on => :member
     get :project_chemicals, :on => :member
     post :create_project_chemical, :on => :collection
+    get :contamination_sources, :on => :member
+    post :create_contamination_source, :on => :collection
     get :autocomplete_chemical_name, :on => :collection
     get :autocomplete_snap_name, :on => :collection
   end

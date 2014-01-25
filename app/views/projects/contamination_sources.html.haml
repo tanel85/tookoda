@@ -1,0 +1,47 @@
+-#  This file is app/views/contamination_sources/index.html.haml
+- if (@contSource != nil && @contSource.errors.any?)
+  - @contSource.errors.full_messages.each do |error_message| 
+    = error_message + '.'
+
+%h2 Saasteallikad
+
+= form_tag create_contamination_source_projects_path do
+  %table#contaminationSources
+    %thead
+      %tr
+        %th Nimetus
+        %th Tähis
+        %th Läbimõõt
+        %th H
+        %th Temperatuur
+        %th X
+        %th Y
+        %th Mahtkiirus
+        %th
+    %tbody
+      - @contSources.each do |contSource|
+        %tr
+          %td #{contSource.name}
+          %td #{contSource.code}
+          %td #{contSource.diameter}
+          %td #{contSource.height}
+          %td #{contSource.temperature}
+          %td #{contSource.x_coordinate}
+          %td #{contSource.y_coordinate}
+          %td #{contSource.volume_rate}
+          %td
+      %tr
+        %td= text_field :contSource, 'name'
+        %td= text_field :contSource, 'code'
+        %td= text_field :contSource, 'diameter', :class => "w100"
+        %td= text_field :contSource, 'height', :class => "w100"
+        %td= text_field :contSource, 'temperature', :class => "w100"
+        %td= text_field :contSource, 'x_coordinate', :class => "w100"
+        %td= text_field :contSource, 'y_coordinate', :class => "w100"
+        %td= text_field :contSource, 'volume_rate', :class => "w100"
+        %td= submit_tag 'Lisa'
+        = hidden_field_tag "project_id", @project_id
+          
+%br
+  
+= button_to 'Tagasi', projects_path, :method => :get

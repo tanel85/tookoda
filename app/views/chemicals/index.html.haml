@@ -24,7 +24,7 @@
           %td #{chemical.hazard_class}
           %td #{chemical.rh}
           %td #{chemical.sp}
-          %td= link_to "Koostisosad", chemical_elements_path(:chemical_id => chemical.id)
+          %td= link_to "Koostisosad", chemical_elements_chemical_path(chemical.id)
       %tr
         %td= text_field :chemical, 'name'
         %td= select :chemical, :chemical_type,

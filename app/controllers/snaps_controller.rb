@@ -6,7 +6,6 @@ class SnapsController < ApplicationController
   def create
     @snap = Snap.create(params[:snap])
     if !@snap.errors.any?
-      flash[:notice] = "SNAP #{@snap.name} on lisatud."
       redirect_to snaps_path
     else
       @snaps = Snap.all
