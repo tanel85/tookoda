@@ -80,3 +80,6 @@ form label {
 .w100 {
   width: 100px;
 }
+a.sign_out {
+  float:right;
+}

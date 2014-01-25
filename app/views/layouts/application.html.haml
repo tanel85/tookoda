@@ -12,5 +12,6 @@
         #notice.message= flash[:notice]
       - elsif flash[:warning]
         #warning.message= flash[:warning]
+      = link_to "Logi välja", destroy_user_session_path, :method => :delete, class: "sign_out"
 
       = yield
