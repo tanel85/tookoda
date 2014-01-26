@@ -18,7 +18,8 @@
           %td #{group.cas}
           %td #{group.name}
           %td #{group.carbon_content}
-          %td= link_to "Koostisosad", group_elements_group_path(group.id)
+          %td= link_to("Koostisosad", group_elements_group_path(group.id)) + ' ' + link_to("Kustuta", group_path(group.id), :method => :delete, 
+          :confirm => 'Kas oled kindel et soovid grupi kustutada? Grupi kustutamisel kustutatakse ka kõik sellesse gruppi kuuluvad kemikaalide koostisosad!')
       %tr
         %td= text_field :group, 'cas'
         %td= text_field :group, 'name'

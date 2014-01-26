@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class ChemicalsController < ApplicationController
   
   autocomplete :v_group_element, :cas, :full => true, :extra_data => [:name, :group_name]
@@ -13,6 +14,20 @@ class ChemicalsController < ApplicationController
     else
       @chemicals = Chemical.all
       render :index
+    end
+  end
+    
+  def destroy
+    chemical_id = params[:id]
+    chemical = Chemical.find(chemical_id)
+    if !chemical.project_chemicals.empty?
+      flash[:warning] = "Kemikaali '#{chemical.name}' ei saa kustutada, kuna see on kasutuses ühes või mitmes projektis. Eemalda see kõigepealt projektidest."
+      @chemicals = Chemical.all
+      render :index
+    else
+      chemical.destroy    
+      flash[:notice] = "Kemikaal '#{chemical.name}' kustutati."
+      redirect_to chemicals_path
     end
   end
   
@@ -43,5 +58,13 @@ class ChemicalsController < ApplicationController
     chemicalElement.code = chemicalElementParams['code']
     chemicalElement.name = chemicalElementParams['name']
     chemicalElement.group_name = chemicalElementParams['group_name']
+  end
+  
+  def destroy_chemical_element
+    chemical_element_id = params[:id]
+    chemical_element = ChemicalElement.find(chemical_element_id)
+    chemical_element.destroy
+    flash[:notice] = "Kemikaali koostisosa kustutati."
+    redirect_to chemical_elements_chemical_path chemical_element.chemical_id
   end
 end

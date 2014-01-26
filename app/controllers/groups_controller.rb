@@ -12,6 +12,22 @@ class GroupsController < ApplicationController
       render :index
     end
   end
+    
+  def destroy
+    group_id = params[:id]
+    group = Group.find(group_id)
+    group.destroy    
+    flash[:notice] = "Grupp '#{group.name}' kustutati."
+    redirect_to groups_path
+  end
+    
+  def destroy_group_element
+    group_element_id = params[:id]
+    group_element = GroupElement.find(group_element_id)
+    group_element.destroy
+    flash[:notice] = "Grupi koostisosa '#{group_element.name}' kustutati."
+    redirect_to group_elements_group_path group_element.group_id
+  end
   
   def group_elements
     @group_id = params[:id]

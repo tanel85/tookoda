@@ -17,6 +17,14 @@ class ProjectsController < ApplicationController
     end
   end
   
+  def destroy
+    project_id = params[:id]
+    project = Project.find(project_id)
+    project.destroy    
+    flash[:notice] = "Projekt '#{project.name}' kustutati."
+    redirect_to projects_path
+  end
+  
   def project_chemicals
     @project_id = params[:id]
     @projectChemicals = ProjectChemical.find_all_by_project_id @project_id
@@ -39,6 +47,14 @@ class ProjectsController < ApplicationController
       @projectChemicals = ProjectChemical.find_all_by_project_id @project_id
       render :project_chemicals
     end
+  end
+  
+  def destroy_project_chemical
+    project_chemical_id = params[:id]
+    project_chemical = ProjectChemical.find(project_chemical_id)
+    project_chemical.destroy
+    flash[:notice] = "Saasteallika kemikaal kustutati."
+    redirect_to project_chemicals_project_path project_chemical.project_id
   end
   
   def fillAttributes projectChemical, projectChemicalParams
@@ -66,6 +82,14 @@ class ProjectsController < ApplicationController
       @contSources = ContaminationSource.find_all_by_project_id @project_id
       render :contamination_sources
     end
+  end
+  
+  def destroy_contamination_source
+    cont_source_id = params[:id]
+    cont_source = ContaminationSource.find(cont_source_id)
+    cont_source.destroy
+    flash[:notice] = "Saasteallikas '#{cont_source.name}' kustutati."
+    redirect_to contamination_sources_project_path cont_source.project_id
   end
   
   def calculate

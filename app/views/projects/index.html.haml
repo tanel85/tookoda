@@ -15,7 +15,9 @@
       - @projects.each do |project|
         %tr
           %td #{project.name}
-          %td= link_to("Ava projekt", project_chemicals_project_path(project.id)) + ' ' + link_to("Saasteallikad", contamination_sources_project_path(project.id))
+          %td= link_to("Ava projekt", project_chemicals_project_path(project.id)) + ' ' + link_to("Saasteallikad", 
+          contamination_sources_project_path(project.id)) + ' ' + link_to("Kustuta", project_path(project.id), :method => :delete, 
+          :confirm => 'Kas oled kindel et soovid projekti kustutada?')
       %tr
         %td= text_field :project, 'name'
         %td= submit_tag 'Lisa uus projekt'

@@ -29,7 +29,8 @@
           %td #{contSource.x_coordinate}
           %td #{contSource.y_coordinate}
           %td #{contSource.volume_rate}
-          %td
+          %td= link_to("Kustuta", destroy_contamination_source_path(@project_id, contSource.id), :method => :delete, 
+          :confirm => 'Kas oled kindel et soovid saasteallika kustutada?')
       %tr
         %td= text_field :contSource, 'name'
         %td= text_field :contSource, 'code'

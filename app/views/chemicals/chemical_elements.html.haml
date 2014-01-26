@@ -21,7 +21,8 @@
           %td #{chemicalElement.group_element.name}
           %td #{chemicalElement.max_percent}
           %td #{chemicalElement.group_element.group.name}
-          %td
+          %td= link_to("Kustuta", destroy_chemical_element_path(@chemical_id, chemicalElement.id), :method => :delete, 
+          :confirm => 'Kas oled kindel et soovid kemikaali koostisosa kustutada?')
       %tr
         %td= autocomplete_field :chemicalElement, 'code', autocomplete_v_group_element_cas_chemicals_path, :update_elements => {:id => '#group_element_id', :name => '#chemicalElement_name', :group_name => '#chemicalElement_group_name'}
         %td= text_field :chemicalElement, 'name', :readonly => true

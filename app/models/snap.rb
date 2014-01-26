@@ -4,6 +4,6 @@ class Snap < ActiveRecord::Base
   
   validates :snap, :name, :presence => true
   
-  has_many :pollution_permit_chemicals
+  has_many :project_chemicals
   
 end

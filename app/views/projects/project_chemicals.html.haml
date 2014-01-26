@@ -24,7 +24,8 @@
           %td #{projectChemical.working_time}
           %td #{projectChemical.snap.snap}
           %td #{projectChemical.snap.name}
-          %td
+          %td= link_to("Kustuta", destroy_project_chemical_path(@project_id, projectChemical.id), :method => :delete, 
+          :confirm => 'Kas oled kindel et soovid kustutada?')
       %tr
         %td= autocomplete_field :projectChemical, 'chemical_name', autocomplete_chemical_name_projects_path, :update_elements => {:id => '#chemical_id'}
         %td= text_field :projectChemical, 'amount', :class => "w100"

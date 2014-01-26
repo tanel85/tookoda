@@ -23,11 +23,15 @@ Tookoda::Application.routes.draw do
     post :create_group_element, :on => :collection
   end
   
+  match 'groups/:group_id/group_elements/:id' => 'groups#destroy_group_element', :as => :destroy_group_element, :method => :delete
+  
   resources :chemicals do
     get :chemical_elements, :on => :member
     post :create_chemical_element, :on => :collection
     get :autocomplete_v_group_element_cas, :on => :collection
   end
+  
+  match 'chemicals/:chemical_id/chemical_elements/:id' => 'chemicals#destroy_chemical_element', :as => :destroy_chemical_element, :method => :delete
   
   resources :pollution_permit_chemicals do
     get :calculate, :on => :member
@@ -45,6 +49,9 @@ Tookoda::Application.routes.draw do
     get :autocomplete_chemical_name, :on => :collection
     get :autocomplete_snap_name, :on => :collection
   end
+  
+  match 'projects/:project_id/project_chemicals/:id' => 'projects#destroy_project_chemical', :as => :destroy_project_chemical, :method => :delete
+  match 'projects/:project_id/contamination_sources/:id' => 'projects#destroy_contamination_source', :as => :destroy_contamination_source, :method => :delete
   #   resources :products
 
   # Sample resource route with options:

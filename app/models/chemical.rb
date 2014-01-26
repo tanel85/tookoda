@@ -6,7 +6,7 @@ class Chemical < ActiveRecord::Base
   validates_numericality_of :loy
   
   has_many :chemical_elements, dependent: :destroy
-  has_many :pollution_permit_chemicals
+  has_many :project_chemicals
   has_many :group_elements, through: :chemical_elements
   
 end

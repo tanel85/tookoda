@@ -16,7 +16,7 @@
         %tr
           %td #{snap.snap}
           %td #{snap.name}
-          %td
+          %td= link_to("Kustuta", snap_path(snap.id), :method => :delete, :confirm => 'Kas oled kindel et soovid snapi kustutada?')
       %tr
         %td= text_field :snap, 'snap'
         %td= text_field :snap, 'name'
