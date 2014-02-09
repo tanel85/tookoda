@@ -15,7 +15,7 @@ div#main {
 }
 a {
   background: transparent;
-  color: maroon;
+  color: #4CA152;
   text-decoration: underline;
   font-weight: bold;
 }
@@ -30,9 +30,9 @@ h1 {
 h1.title {
   margin: 0 0 1em;
   padding: 10px;
-  background-color: orange;
+  background-color: rgb(25, 144, 99);
   color: white;
-  border-bottom: 4px solid gold;
+  border-bottom: 4px solid rgb(147, 133, 57);
   font-size: 2em;
   font-style: normal;
 }
@@ -45,7 +45,8 @@ table {
 table th {
   border: 2px solid white;
   font-weight: bold;
-  background-color: wheat;
+  background-color: rgb(93, 174, 120);
+  color: white;
 }
 table th, table td {
   padding: 4px;
@@ -65,6 +66,9 @@ form label {
   font-weight: bold;
   color: maroon;
 }
+input[type=submit] {
+  background: #E2E5F2;
+}
 .button_to {
   display: inline;
 }
@@ -82,4 +86,29 @@ form label {
 }
 a.sign_out {
   float:right;
+  color: white;
+  font-size: 10pt;
+  margin-top: 10px;
+  margin-right: 30px;
+}
+.footer {
+  text-align: center;
+  margin-top: 35px;
+  padding-top: 15px;
+  background: url(line.png) repeat-x 0 0;
+  color: #737373;
+  text-transform: uppercase;
+}
+.footer .item {
+  display: inline-block;
+  font-size: 14px;
+  margin: 0 12px;
+}
+.item_mail {
+  color: #737373;
+  font-weight: normal;
+}
+.main_link {
+  color: white;
+  text-decoration: none;
 }

@@ -7,11 +7,22 @@
     = csrf_meta_tags
 
   %body
+    %h1.title 
+      = link_to "Saasteload", projects_path, :method => :get, class: "main_link"
+      = link_to "Logi välja", destroy_user_session_path, :method => :delete, class: "sign_out"
     #main
       - if flash[:notice]
         #notice.message= flash[:notice]
       - elsif flash[:warning]
         #warning.message= flash[:warning]
-      = link_to "Logi välja", destroy_user_session_path, :method => :delete, class: "sign_out"
 
       = yield
+      
+      .footer
+        %ul.list
+          %li.item OÜ Adepte Ekspert © 2014
+          %li.item Pärnu mnt 21, Tallinn
+          %li.item
+            = link_to "info@adepte.ee", "mailto:info@adepte.ee", class: "item_mail"
+          %li.item +372 6 732 244
+          %li.item +372 5 059 914
