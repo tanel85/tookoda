@@ -1,0 +1,35 @@
+- if (@chemical != nil && @chemical.errors.any?)
+  - @chemical.errors.full_messages.each do |error_message| 
+    = error_message + '.'
+
+%h2 Kemikaali muutmine
+= form_tag chemical_path(@chemical), :method => :put do
+  %table.form_table
+    %tbody
+      %tr
+        %td= label :chemical, :name, 'Nimetus:'
+        %td= text_field :chemical, 'name'
+      %tr
+        %td= label :chemical, :chemical_type, 'Tüüp:'
+        %td 
+          = select :chemical, :chemical_type,
+                [['WB - veepõhine','WB'],
+                ['SB - lahustipõhine','SB']], 
+                {:prompt => '- vali -'}
+      %tr      
+        %td= label :chemical, :loy, 'LOÜ %:'
+        %td= text_field :chemical, 'loy', :class => "w50"
+      %tr
+        %td= label :chemical, :hazard_class, 'Ohuklass:'
+        %td= text_field :chemical, 'hazard_class'
+      %tr
+        %td= label :chemical, :rh, 'R või H:'
+        %td= text_field :chemical, 'rh'
+      %tr
+        %td= label :chemical, :sp, 'S või P:'
+        %td= text_field :chemical, 'sp'
+  %br
+  %br
+  
+  = submit_tag 'Salvesta', :class => 'form_btn'
+= button_to 'Tagasi', chemicals_path, :method => :get, :class => 'form_btn'

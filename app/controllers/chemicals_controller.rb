@@ -16,6 +16,20 @@ class ChemicalsController < ApplicationController
       render :index
     end
   end
+  
+  def edit
+    @chemical = Chemical.find params[:id]
+  end
+  
+  def update 
+    @chemical = Chemical.find params[:id]
+    @chemical.update_attributes(params[:chemical])
+    if !@chemical.errors.any?
+      redirect_to chemicals_path
+    else
+      render :edit
+    end
+  end
     
   def destroy
     chemical_id = params[:id]

@@ -66,8 +66,18 @@ form label {
   font-weight: bold;
   color: maroon;
 }
+td label {
+  float:right;
+  margin-right:10px;
+}
 input[type=submit] {
   background: #E2E5F2;
+}
+.form_table {
+  border: none;
+}
+.form_btn {
+  float:left;
 }
 .button_to {
   display: inline;

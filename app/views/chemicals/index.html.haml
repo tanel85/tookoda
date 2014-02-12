@@ -24,7 +24,8 @@
           %td #{chemical.hazard_class}
           %td #{chemical.rh}
           %td #{chemical.sp}
-          %td= link_to("Koostisosad", chemical_elements_chemical_path(chemical.id)) + ' ' + link_to("Kustuta", 
+          %td= link_to("Koostisosad", chemical_elements_chemical_path(chemical.id)) + ' ' + link_to("Muuda", 
+          edit_chemical_path(chemical)) + ' ' + link_to("Kustuta", 
           chemical_path(chemical.id), :method => :delete, :confirm => 'Kas oled kindel et soovid kemikaali kustutada?')
       %tr
         %td= text_field :chemical, 'name'
