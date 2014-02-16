@@ -1,0 +1,37 @@
+- if (@contSource != nil && @contSource.errors.any?)
+  - @contSource.errors.full_messages.each do |error_message| 
+    = error_message + '.'
+
+%h2 Saasteallika muutmine
+= form_tag update_contamination_source_path(@project_id, @contSource.id), :method => :put do
+  %table.form_table
+    %tbody
+      %tr
+        %td= label :contSource, :name, 'Nimetus:'
+        %td= text_field :contSource, 'name'
+      %tr
+        %td= label :contSource, :code, 'Nr plaanil või kaardil:'
+        %td= text_field :contSource, 'code'
+      %tr
+        %td= label :contSource, :diameter, 'Ava läbimõõt, m:'
+        %td= text_field :contSource, 'diameter'
+      %tr
+        %td= label :contSource, :height, 'Väljumiskõrgus maapinnast, m:'
+        %td= text_field :contSource, 'height'
+      %tr
+        %td= label :contSource, :temperature, 'Temperatuur, °C:'
+        %td= text_field :contSource, 'temperature'
+      %tr
+        %td= label :contSource, :x_coordinate, 'X - koordinaat:'
+        %td= text_field :contSource, 'x_coordinate'
+      %tr
+        %td= label :contSource, :y_coordinate, 'Y - koordinaat:'
+        %td= text_field :contSource, 'y_coordinate'
+      %tr
+        %td= label :contSource, :volume_rate, 'Mahtkiirus:'
+        %td= text_field :contSource, 'volume_rate'
+  %br
+  %br
+  
+  = submit_tag 'Salvesta', :class => 'form_btn'
+= button_to 'Tagasi', contamination_sources_project_path(@project_id), :method => :get, :class => 'form_btn'

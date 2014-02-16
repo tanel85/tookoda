@@ -92,6 +92,22 @@ class ProjectsController < ApplicationController
     redirect_to contamination_sources_project_path cont_source.project_id
   end
   
+  def edit_contamination_source
+    @project_id = params[:project_id]
+    @contSource = ContaminationSource.find params[:id]
+  end
+  
+  def update_contamination_source
+    @contSource = ContaminationSource.find params[:id]
+    @project_id = params[:project_id]
+    @contSource.update_attributes(params[:contSource])
+    if !@contSource.errors.any?
+      redirect_to contamination_sources_project_path @project_id
+    else
+      render :edit_contamination_source
+    end
+  end
+  
   def calculate
     @project_id = params[:id]
     pollPermRows = VPollutionPermitResult.find_by_project @project_id

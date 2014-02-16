@@ -11,6 +11,6 @@ class ContaminationSource < ActiveRecord::Base
   validates_numericality_of :volume_rate, :allow_nil => true
   
   belongs_to :project
-  has_many :project_chemicals
+  has_many :project_chemicals, dependent: :destroy
   
 end

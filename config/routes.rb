@@ -50,6 +50,8 @@ Tookoda::Application.routes.draw do
     get :autocomplete_snap_name, :on => :collection
   end
   
+  match 'projects/:project_id/contamination_source/:id/edit' => 'projects#edit_contamination_source', :as => :edit_contamination_source, :method => :get
+  match 'projects/:project_id/contamination_source/:id' => 'projects#update_contamination_source', :as => :update_contamination_source, :method => :put
   match 'projects/:project_id/project_chemicals/:id' => 'projects#destroy_project_chemical', :as => :destroy_project_chemical, :method => :delete
   match 'projects/:project_id/contamination_sources/:id' => 'projects#destroy_contamination_source', :as => :destroy_contamination_source, :method => :delete
   #   resources :products
