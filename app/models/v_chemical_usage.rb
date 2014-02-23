@@ -40,7 +40,7 @@ class VChemicalUsage < ActiveRecord::Base
   end
   
   def self.add_rows sheet, project_id
-    rows = VChemicalUsage.find_by_project project_id
+    rows = VChemicalUsage.where(:project_id => project_id).order(:prch_id)
     prch_id = nil
     row_number = 3
     rows.each do |row|
