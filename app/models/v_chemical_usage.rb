@@ -43,20 +43,20 @@ class VChemicalUsage < ActiveRecord::Base
     rows = VChemicalUsage.where(:project_id => project_id).order(:prch_id)
     prch_id = nil
     row_number = 3
-    rows.each do |row|
+    rows.each_with_index do |row, index|
       if prch_id == row.prch_id
         sheet.add_row ["", "", "", "", "", "", "", "", "", "", row.group_cas, row.group_name, row.gs.round(4), row.ta.round(4), ""]
-        sheet.merge_cells "A" + row_number.to_s + ":A" + (row_number + 1).to_s
-        sheet.merge_cells "B" + row_number.to_s + ":B" + (row_number + 1).to_s
-        sheet.merge_cells "C" + row_number.to_s + ":C" + (row_number + 1).to_s
-        sheet.merge_cells "D" + row_number.to_s + ":D" + (row_number + 1).to_s
-        sheet.merge_cells "E" + row_number.to_s + ":E" + (row_number + 1).to_s
-        sheet.merge_cells "F" + row_number.to_s + ":F" + (row_number + 1).to_s
-        sheet.merge_cells "G" + row_number.to_s + ":G" + (row_number + 1).to_s
-        sheet.merge_cells "H" + row_number.to_s + ":H" + (row_number + 1).to_s
-        sheet.merge_cells "I" + row_number.to_s + ":I" + (row_number + 1).to_s
-        sheet.merge_cells "J" + row_number.to_s + ":J" + (row_number + 1).to_s
-        sheet.merge_cells "O" + row_number.to_s + ":O" + (row_number + 1).to_s
+        sheet.merge_cells "A" + (index + 3).to_s + ":A" + (index + 4).to_s
+        sheet.merge_cells "B" + (index + 3).to_s + ":B" + (index + 4).to_s
+        sheet.merge_cells "C" + (index + 3).to_s + ":C" + (index + 4).to_s
+        sheet.merge_cells "D" + (index + 3).to_s + ":D" + (index + 4).to_s
+        sheet.merge_cells "E" + (index + 3).to_s + ":E" + (index + 4).to_s
+        sheet.merge_cells "F" + (index + 3).to_s + ":F" + (index + 4).to_s
+        sheet.merge_cells "G" + (index + 3).to_s + ":G" + (index + 4).to_s
+        sheet.merge_cells "H" + (index + 3).to_s + ":H" + (index + 4).to_s
+        sheet.merge_cells "I" + (index + 3).to_s + ":I" + (index + 4).to_s
+        sheet.merge_cells "J" + (index + 3).to_s + ":J" + (index + 4).to_s
+        sheet.merge_cells "O" + (index + 3).to_s + ":O" + (index + 4).to_s
       else
         prch_id = row.prch_id
         row_number += 1
