@@ -49,18 +49,7 @@ class VChemicalUsage < ActiveRecord::Base
         sheet.add_row ["", "", "", "", "", "", "", "", "", "", row.group_cas, row.group_name, row.gs.round(4), row.ta.round(4), ""]
       else
         if index + 3 > merge_start_index
-          sheet.merge_cells "A" + merge_start_index.to_s + ":A" + (index + 3).to_s
-          sheet.merge_cells "B" + merge_start_index.to_s + ":B" + (index + 3).to_s
-          sheet.merge_cells "C" + merge_start_index.to_s + ":C" + (index + 3).to_s
-          sheet.merge_cells "D" + merge_start_index.to_s + ":D" + (index + 3).to_s
-          sheet.merge_cells "E" + merge_start_index.to_s + ":E" + (index + 3).to_s
-          sheet.merge_cells "F" + merge_start_index.to_s + ":F" + (index + 3).to_s
-          sheet.merge_cells "G" + merge_start_index.to_s + ":G" + (index + 3).to_s
-          sheet.merge_cells "H" + merge_start_index.to_s + ":H" + (index + 3).to_s
-          sheet.merge_cells "I" + merge_start_index.to_s + ":I" + (index + 3).to_s
-          sheet.merge_cells "J" + merge_start_index.to_s + ":J" + (index + 3).to_s
-          sheet.merge_cells "O" + merge_start_index.to_s + ":O" + (index + 3).to_s
-          puts "A" + merge_start_index.to_s + ":A" + (index + 3).to_s
+          merge_cells sheet, merge_start_index, index + 3
         end
         prch_id = row.prch_id
         row_number += 1
@@ -69,7 +58,24 @@ class VChemicalUsage < ActiveRecord::Base
           row.loy, row.amount, row.hazard_class, row.rh, row.sp, row.snap, row.snap_name, 
           row.group_cas, row.group_name, row.gs.round(4), row.ta.round(4), row.cont_source_name]
       end
+      if index == rows.length - 1 && index + 4 > merge_start_index
+        merge_cells sheet, merge_start_index, index + 4
+      end
     end
+  end
+  
+  def self.merge_cells sheet, start_index, end_index
+    sheet.merge_cells "A" + start_index.to_s + ":A" + end_index.to_s
+    sheet.merge_cells "B" + start_index.to_s + ":B" + end_index.to_s
+    sheet.merge_cells "C" + start_index.to_s + ":C" + end_index.to_s
+    sheet.merge_cells "D" + start_index.to_s + ":D" + end_index.to_s
+    sheet.merge_cells "E" + start_index.to_s + ":E" + end_index.to_s
+    sheet.merge_cells "F" + start_index.to_s + ":F" + end_index.to_s
+    sheet.merge_cells "G" + start_index.to_s + ":G" + end_index.to_s
+    sheet.merge_cells "H" + start_index.to_s + ":H" + end_index.to_s
+    sheet.merge_cells "I" + start_index.to_s + ":I" + end_index.to_s
+    sheet.merge_cells "J" + start_index.to_s + ":J" + end_index.to_s
+    sheet.merge_cells "O" + start_index.to_s + ":O" + end_index.to_s
   end
 
 end
