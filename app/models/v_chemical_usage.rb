@@ -2,30 +2,32 @@
 class VChemicalUsage < ActiveRecord::Base
 
    attr_accessible :prch_id, :project_id, :chemical_name, :chemical_type, :loy, :amount, :hazard_class, :rh, :sp,
-    :snap, :snap_name, :group_cas, :group_name, :ta, :gs, :cont_source_name 
+    :snap, :snap_name, :group_cas, :group_name, :ta, :gs, :cont_source_code 
     
   def self.find_by_project project_id
     VChemicalUsage.where(:project_id => project_id).order('prch_id, group_name')
   end
   
   def self.add_sheet axlx_package, project_id
+    row_style = axlx_package.workbook.styles.add_style :alignment => {:wrap_text => true}
     axlx_package.workbook.add_worksheet(:name => "Kemikaalide kasutamine") do |sheet|
-      add_header sheet
-      add_rows sheet, project_id
+      add_header sheet, row_style
+      add_rows sheet, row_style, project_id
+      sheet.column_widths 5, 20, 13, 9.5, 9.5, 12, 12, 12, 6.5, 18, 12, 12, 9.5, 9.5, 12
     end
   end
   
-  def self.add_header sheet
+  def self.add_header sheet, row_style
     sheet.add_row ["Jrk nr", "Lahusteid sisaldav kemikaal", "", "", "Lahusteid sisaldava kemikaali kasutamine", 
-      "", "", "", "", "", "Välisõhku eralduvate LOÜ-de heitkogus saasteainete kaupa", "", "", "", "Saasteallika nr plaanil või kaardil"]
+      "", "", "", "", "", "Välisõhku eralduvate LOÜ-de heitkogus saasteainete kaupa", "", "", "", "Saasteallika nr plaanil või kaardil"], :style => row_style
     sheet.merge_cells "B1:D1"
     sheet.merge_cells "E1:J1"
     sheet.merge_cells "K1:N1"
     sheet.add_row ["", "Nimetus", "tüüp (WB – veepõhine; SB - lahustipõhine)", "LOÜ-de sisaldus, massi %", "kemikaali kogus aastas, tonni", 
-      "Ohuklass (kategooria)", "R- või H- lause", "S- või P- lause", "Tegevusala või tehnoloogiaprotsess", "", "CAS nr", "nimetus", "heitkogus", "", ""]
+      "Ohuklass (kategooria)", "R- või H- lause", "S- või P- lause", "Tegevusala või tehnoloogiaprotsess", "", "CAS nr", "nimetus", "heitkogus", "", ""], :style => row_style
     sheet.merge_cells "I2:J2"
     sheet.merge_cells "M2:N2"
-    sheet.add_row ["", "", "", "", "", "", "", "", "SNAPi kood", "nimetus", "", "", "hetkeline, g/s", "tonnides aastas", ""]
+    sheet.add_row ["", "", "", "", "", "", "", "", "SNAPi kood", "nimetus", "", "", "hetkeline, g/s", "tonnides aastas", ""], :style => row_style
     sheet.merge_cells "A1:A3"
     sheet.merge_cells "B2:B3"
     sheet.merge_cells "C2:C3"
@@ -39,14 +41,14 @@ class VChemicalUsage < ActiveRecord::Base
     sheet.merge_cells "O1:O3"
   end
   
-  def self.add_rows sheet, project_id
+  def self.add_rows sheet, row_style, project_id
     rows = VChemicalUsage.where(:project_id => project_id).order(:prch_id)
     prch_id = nil
     row_number = 0
     merge_start_index = 4
     rows.each_with_index do |row, index|
       if prch_id == row.prch_id
-        sheet.add_row ["", "", "", "", "", "", "", "", "", "", row.group_cas, row.group_name, row.gs.round(4), row.ta.round(4), ""]
+        sheet.add_row ["", "", "", "", "", "", "", "", "", "", row.group_cas, row.group_name, row.gs.round(4), row.ta.round(4), ""], :style => row_style
       else
         if index + 3 > merge_start_index
           merge_cells sheet, merge_start_index, index + 3
@@ -56,7 +58,7 @@ class VChemicalUsage < ActiveRecord::Base
         merge_start_index = index + 4
         sheet.add_row [row_number, row.chemical_name, (row.chemical_type == 'WB' ? 'WB - veepõhine' : 'SB - lahustipõhine'), 
           row.loy, row.amount, row.hazard_class, row.rh, row.sp, row.snap, row.snap_name, 
-          row.group_cas, row.group_name, row.gs.round(4), row.ta.round(4), row.cont_source_name]
+          row.group_cas, row.group_name, row.gs.round(4), row.ta.round(4), row.cont_source_code], :style => row_style
       end
       if index == rows.length - 1 && index + 4 > merge_start_index
         merge_cells sheet, merge_start_index, index + 4

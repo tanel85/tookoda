@@ -17,9 +17,9 @@ class VChemicalUsages < ActiveRecord::Migration
             ,grou.name AS group_name
             ,innr.ta
             ,innr.ta * 1000000 / (prch.working_time * 3600) gs
-            ,(SELECT coso.name
+            ,(SELECT coso.code
                 FROM contamination_sources coso
-               WHERE coso.id = prch.contamination_source_id) AS cont_source_name
+               WHERE coso.id = prch.contamination_source_id) AS cont_source_code
         FROM (SELECT prch2.id
                     ,grel.group_id
                     ,SUM(chel.max_percent / (SELECT SUM(chel2.max_percent)
