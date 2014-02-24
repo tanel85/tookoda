@@ -43,22 +43,25 @@ class VChemicalUsage < ActiveRecord::Base
     rows = VChemicalUsage.where(:project_id => project_id).order(:prch_id)
     prch_id = nil
     row_number = 0
-    merge_start_index = 0
+    merge_start_index = 4
     rows.each_with_index do |row, index|
       if prch_id == row.prch_id
         sheet.add_row ["", "", "", "", "", "", "", "", "", "", row.group_cas, row.group_name, row.gs.round(4), row.ta.round(4), ""]
-        sheet.merge_cells "A" + merge_start_index.to_s + ":A" + (index + 4).to_s
-        sheet.merge_cells "B" + merge_start_index.to_s + ":B" + (index + 4).to_s
-        sheet.merge_cells "C" + merge_start_index.to_s + ":C" + (index + 4).to_s
-        sheet.merge_cells "D" + merge_start_index.to_s + ":D" + (index + 4).to_s
-        sheet.merge_cells "E" + merge_start_index.to_s + ":E" + (index + 4).to_s
-        sheet.merge_cells "F" + merge_start_index.to_s + ":F" + (index + 4).to_s
-        sheet.merge_cells "G" + merge_start_index.to_s + ":G" + (index + 4).to_s
-        sheet.merge_cells "H" + merge_start_index.to_s + ":H" + (index + 4).to_s
-        sheet.merge_cells "I" + merge_start_index.to_s + ":I" + (index + 4).to_s
-        sheet.merge_cells "J" + merge_start_index.to_s + ":J" + (index + 4).to_s
-        sheet.merge_cells "O" + merge_start_index.to_s + ":O" + (index + 4).to_s
       else
+        if index + 3 > merge_start_index
+          sheet.merge_cells "A" + merge_start_index.to_s + ":A" + (index + 3).to_s
+          sheet.merge_cells "B" + merge_start_index.to_s + ":B" + (index + 3).to_s
+          sheet.merge_cells "C" + merge_start_index.to_s + ":C" + (index + 3).to_s
+          sheet.merge_cells "D" + merge_start_index.to_s + ":D" + (index + 3).to_s
+          sheet.merge_cells "E" + merge_start_index.to_s + ":E" + (index + 3).to_s
+          sheet.merge_cells "F" + merge_start_index.to_s + ":F" + (index + 3).to_s
+          sheet.merge_cells "G" + merge_start_index.to_s + ":G" + (index + 3).to_s
+          sheet.merge_cells "H" + merge_start_index.to_s + ":H" + (index + 3).to_s
+          sheet.merge_cells "I" + merge_start_index.to_s + ":I" + (index + 3).to_s
+          sheet.merge_cells "J" + merge_start_index.to_s + ":J" + (index + 3).to_s
+          sheet.merge_cells "O" + merge_start_index.to_s + ":O" + (index + 3).to_s
+          puts "A" + merge_start_index.to_s + ":A" + (index + 3).to_s
+        end
         prch_id = row.prch_id
         row_number += 1
         merge_start_index = index + 4
