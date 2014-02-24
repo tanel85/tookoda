@@ -142,7 +142,8 @@ class ProjectsController < ApplicationController
     VPollutionAmount.add_sheet p, @project_id
     VChemicalUsage.add_sheet p, @project_id
     file = ReportHelper.xlsx_to_string p
-    send_data file, :filename=>"report.xlsx"
+    project_name = Project.find_project_name @project_id
+    send_data file, :filename => project_name.to_s + ".xlsx"
   end
 
 end
